@@ -4,6 +4,13 @@ import {MdCheckCircle, MdError, MdLink} from 'react-icons/md';
 
 import {Container, FileInfo, Preview} from './styles';
 
+function readableName(name) {
+  if(name.length < 23){
+    return name;
+  }
+  return String(name).substring(0, 15)+'...'+String(name).substring(name.length - 4);
+}
+
 const FileList = ({files, onDelete}) => (
   <Container>
     {files.map(uploadedFile => (
@@ -11,7 +18,7 @@ const FileList = ({files, onDelete}) => (
         <FileInfo>
           <Preview src={uploadedFile.preview} />
           <div>
-            <strong>{uploadedFile.name}</strong>
+            <strong>{readableName(uploadedFile.name)}</strong>
             {uploadedFile.uploaded && (<small>{uploadedFile.createdAt}</small>)}
             <span>{uploadedFile.readableSize} {!!uploadedFile.url && <button onClick={() => onDelete(uploadedFile.id)}>Excluir</button>}</span>
           </div>
